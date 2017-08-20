@@ -1,4 +1,9 @@
 function [path]=secondRoundtracing(path, point, point_i,neuriteSeeds,xNeuD,neuStartSeed, neuSeed, neu, weight,inputSeg,cell_inc,lenghtToSearch,NumofBands,NumofIncrement);
+%   This function is called only if manual intervention is included in
+%   options (for that set option.manual=1). If the trace is not correct, 
+%   this function runs the whole tracing process through involving the selected 
+%   point in trace.
+
 path_n=path(1:end-10); 
 sz=size(weight);
 maxNeuLen=floor(sqrt(sz(1)^2+sz(2)^2)/2);

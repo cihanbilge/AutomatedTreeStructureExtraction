@@ -1,5 +1,5 @@
 function q= getquadrant(dd)
-%assign correct rectangle.
+%gives the quadrant of point.
 %dd is given 
  x=dd(1); y=dd(2);
  if (x>0)

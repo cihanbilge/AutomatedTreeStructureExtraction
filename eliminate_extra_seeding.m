@@ -1,5 +1,5 @@
 function S2=eliminate_extra_seeding(S,D,sz)
-%eliminate extra seeds in 8-neighborhood of each seed.
+%eliminates extra seeds in 8-neighborhood of each seed.
 S2=[];
 im=zeros(sz); 
 im(S)=1; im=im.*D; 

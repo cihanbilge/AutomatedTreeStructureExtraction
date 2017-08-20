@@ -1,5 +1,5 @@
 function [point,points]=findClosestPoint(X,Y)
-% find the closest point in array Y to X
+% finds the closest point in array Y to X
 if (isempty(Y)==0)
     dist=[];
     for i=1:size(Y,1)

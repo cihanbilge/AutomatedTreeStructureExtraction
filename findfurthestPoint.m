@@ -1,5 +1,5 @@
 function [point,points]=findfurthestPoint(X,Y)
-% find the closest point in array Y to X
+% finds the furthest point in array Y to X
 if (isempty(Y)==0)
     dist=[];
     for i=1:size(Y,1)

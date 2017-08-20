@@ -1,6 +1,5 @@
 function [xTemp1]=getLine(cSXY, arcC, arcS, sz, length, thk, rotAngle)
 %creates a line with given thickness, length, direction and starting point.
-
 xTemp = zeros(sz);
 tSX1 = floor(cSXY(2) + length*cos( arcC));
 tSY1 = floor(cSXY(1) + length*sin(arcS));
