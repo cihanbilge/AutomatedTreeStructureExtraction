@@ -5,10 +5,10 @@ clear all
 %load segmented binary image and segmented soma mask
 load('inputSeg');
 load('inputSoma');
-%cell_rect is pre-generated rectangles for seed search. For parameters are
+%cell_rect is pre-generated rectangles for seed search. If parameters are
 %not needed to be changed, same rectangles can be used for each of the images in dataset
 %if it is not required to create rectangles again set option.rect=0 and
-%option.cell=cell_rect;
+%option.cell=cell_rect. If the rectangles are needed to be generated set option.rect=1;
 option.rect=0; option.cell=cell_rect;
 %option.rect=1;
 %to allow manual intervention: option.manual=1; 
@@ -16,6 +16,6 @@ option.rect=0; option.cell=cell_rect;
 option.manual=1;
 tic;
 [neuriteGraph,cell_rect]=runCenterLineParallel(inputSeg,inputSoma,option);
-a=toc;
+totaltime=toc;
 
 
