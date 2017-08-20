@@ -1,27 +1,30 @@
-function [path]=findNeuritePath(neuriteSeeds,xNeuD,pInSoma, pInNeurite, neuStartSeed, neuSeed, neu, weight,inputSeg,cell_inc,lenghtToSearch,NumofBands,NumofIncrement)
-%starting from the starting point and the initial direction of neurite, it
-%traces through neurite.
-
+function [path]=secondRoundtracing(path, point, point_i,neuriteSeeds,xNeuD,neuStartSeed, neuSeed, neu, weight,inputSeg,cell_inc,lenghtToSearch,NumofBands,NumofIncrement);
+path_n=path(1:end-10); 
 sz=size(weight);
 maxNeuLen=floor(sqrt(sz(1)^2+sz(2)^2)/2);
-path = pInSoma;
 neuSeeds=inputSeg;
 nbhBox = getLinearNeighborhood_p(size(weight), 1); % 1);
 nbhBox=nbhBox(nbhBox~=0);
-nS = neuStartSeed; nS_ind=sub2ind(sz,nS(1),nS(2));
-idx = find(neuriteSeeds == sub2ind(sz,nS(1),nS(2)));
+nS = point; nS_ind=point_i;
+idx = find(neuriteSeeds == nS_ind);
+if (isempty(idx)==1)
+    disp('not possible')
+    path=path;
+    return 
+end
 r = ceil(max(xNeuD(:)));
 [dirEstimate, ~] = getPCA(neuriteSeeds,sz, r); 
 prinCompAtSeed = dirEstimate(idx(1),:);
-
+path_s=path;
 subpath = joinSeedToPath(nS,nS_ind, path, neuSeeds, nbhBox,prinCompAtSeed, weight);
-path = [sub2ind(size(weight),path(1), path(2)); subpath(2:end)];
+path = [path; subpath(2:end)];
 
 FLAG = 1;
       
 uS=setdiff(neuSeed,path);
-cS = neuStartSeed(end,:);
-pS = pInSoma(1,:);
+cS = point;
+pInNeurite=point;
+pS = path(max(end-10,1)); [a,b]=ind2sub(sz,pS); pS=[a,b];
 ignoreSeedSet = [];
 uS=setdiff(uS,sub2ind(sz, pInNeurite(1), pInNeurite(2)));
 while (FLAG==1)
@@ -47,7 +50,7 @@ while (FLAG==1)
     if (path(end)~= subpath(1))
         continue
     end
-    path = [path; subpath(2:end)]; %n=neu; n(path)=6; n(neuriteSeeds)=3;  imshow(n,[])
+    path = [path; subpath(2:end)]; n=neu; n(path)=6; n(neuriteSeeds)=3;  imshow(n,[],'InitialMagnification',9000)
     if (size(path,1) > maxNeuLen)
         FLAG = 0;
         break

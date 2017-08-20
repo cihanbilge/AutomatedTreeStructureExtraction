@@ -1,4 +1,4 @@
-function [neuGraph_path]=traceNeurites(self,D,S,se,cell_inc,lenghtToSearch,NumofBands,NumofIncrement)
+function [neuGraph_path]=traceNeurites(self,D,S,S_c,se,cell_inc,lenghtToSearch,NumofBands,NumofIncrement,option)
 %this function is run for each soma.
 %INPUT:
 %self: struct contains segmented image and segmented soma masks of image.
@@ -40,6 +40,27 @@ for i=1:l
         [path] = findNeuritePath(neuriteSeeds,xNeuD,pInSoma, pInNeurite,neuStartSeed, neuSeed, neu, weight,inputSeg,cell_inc,lenghtToSearch,NumofBands,NumofIncrement);
         if (size(path,1) > minNeuLen)
             neuGraph_path{i}=path;
+        end
+        if (option.manual==1)
+            if (isempty(path)==0)
+                t=0;
+                while (t==0)
+                im=inputSeg; im(path)=2; imshow(im,[],'InitialMagnification',9000);
+                prompt = 'Is this the correct path? If so press 1. If not press 0 and choose a point by double clicking to correct the path. If you want to eliminate this trace press 3.';
+                x = input(prompt);
+                if (x==1)
+                    neuGraph_path{i}=path; t=1;
+                elseif (x==3)
+                    neuGraph_path{i}=[]; t=1;
+                end
+                while (x==0)
+                [newpath]=secondRoundTraceNeurites(im,inputSeg,path,S_c,neuriteSeeds,xNeuD,neuStartSeed, neuSeed, neu, weight,cell_inc,lenghtToSearch,NumofBands,NumofIncrement);
+                neuGraph_path{i}=newpath; path=newpath;
+                x=2;
+                 t=0;   
+                end
+                end
+            end
         end
     end
 end

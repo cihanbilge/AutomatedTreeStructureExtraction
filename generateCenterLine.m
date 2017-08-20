@@ -1,4 +1,4 @@
-function [path_neu,D]=generateCenterLine(inputSeg, inputSoma, lb,cell_inc,lenghtToSearch,NumofBands,NumofIncrement)
+function [path_neu,D]=generateCenterLine(inputSeg, inputSoma, lb,cell_inc,lenghtToSearch,NumofBands,NumofIncrement,option)
 % this code generates the centerline tracing for each neurite of each soma
 % INPUT:
 % inputSeg: segmented image,
@@ -17,20 +17,20 @@ se=strel('disk',2);
 Somas=connComp(inputSoma);
 comp_Num=Somas.compNum;
 path_neu=cell(comp_Num); 
-[S,D]=genseed(self,lb); %generate seeds
+[S,S_i,D]=genseed(self,lb); %generate seeds
 
 for i=1:comp_Num
-tic;
+%tic;
     diffSomas=setdiff(1:comp_Num,i);
     base=zeros(size(inputSeg));
     for j=1:size(diffSomas,2)
         base(Somas.compIdx{diffSomas(j),1})=1;
     end
-    xSoma=zeros(size(inputSeg)); xSoma(Somas.compIdx{i,1})=1; xSoma=imdilate(xSoma,se);
+    xSoma=zeros(size(inputSeg)); xSoma(Somas.compIdx{i,1})=1; %xSoma=imdilate(xSoma,se);
     xSeg=inputSeg; xSeg(base==1)=0;
     self.xSeg=xSeg; self.xSoma=xSoma;
-    [neuGraph_path] = traceNeurites(self,D,S,se,cell_inc,lenghtToSearch,NumofBands,NumofIncrement); 
-toc;
+    [neuGraph_path] = traceNeurites(self,D,S,S_i,se,cell_inc,lenghtToSearch,NumofBands,NumofIncrement,option); 
+%toc;
 path_neu{i}=neuGraph_path; 
 end
 end

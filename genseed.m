@@ -1,4 +1,4 @@
-function [S,D]=genseed(self, lb)
+function [S,S_i,D]=genseed(self, lb)
 %this code will be run for each soma. inputSeg is the segmented image
 %where all soma regions set equal to zero but the selected one.
 %inputSoma(which is not required here though) is the soma region of the
@@ -82,6 +82,12 @@ S=unique(S2);
 S=[S; somaSeeds];
 base=self.inputSeg;
 base(S)=5; figure; imshow(base,[],'InitialMagnification',9000)
+S_i=[];
+for i=1:length(S)
+    [a,b]=ind2sub(sz,S(i));
+    S_i=[S_i; a b];
+end
+
 end
 
 

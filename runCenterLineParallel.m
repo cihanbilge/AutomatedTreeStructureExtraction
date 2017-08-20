@@ -18,7 +18,7 @@ if (option.rect==1)
 else
     cell_inc=option.cell;
 end
-tic;
+%tic;
 CCC=connComp(inputSeg);
 THR=300;
 InSidx = cat(1, CCC.compIdx{CCC.compCard > THR});
@@ -26,8 +26,8 @@ InS = zeros(size(inputSeg));
 InS(InSidx) = 1;
 inputSeg=InS;
 lb=0.08; 
-[neuriteGraph,D]=generateCenterLine(double(inputSeg), inputSoma, lb,cell_inc,lenghtToSearch,NumofBands,NumofIncrement);
-toc;
+[neuriteGraph,D]=generateCenterLine(double(inputSeg), inputSoma, lb,cell_inc,lenghtToSearch,NumofBands,NumofIncrement,option);
+%toc;
 
 %density estimation
 %patchsize=3;

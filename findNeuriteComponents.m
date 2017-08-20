@@ -22,8 +22,8 @@ end
 dilSomaB=dilatedSoma1; dilSomaB(dilatedSoma==1)=0;
 dilSomaB1=dilatedSoma3; dilSomaB1(dilatedSoma2==1)=0;
 
-neuMarks=dilSomaB.*double(xSeg); nnm=neuMarks; nnm(S)=2;
-figure; imshow(nnm,[]) ;
+neuMarks=dilSomaB.*double(xSeg); %nnm=neuMarks; nnm(S)=2;
+%figure; imshow(nnm,[]) ;
 neuMarks1=dilSomaB1.*double(xSeg); 
 outerMarksCentroid =regionprops(neuMarks1,'centroid');
 
@@ -39,7 +39,7 @@ for i=1:length(B)
         Bi=B{i};
         I = zeros(size(xNeurites));
         s_n=sub2ind(size(xSeg),Bi(:,1),Bi(:,2));
-        I(s_n)=1; figure; imshow(I,[]);
+        I(s_n)=1; %figure; imshow(I,[]);
         pInNeurite = regionprops(I,'Centroid');
         pInNeurite=floor(pInNeurite.Centroid); pInNeurite=fliplr(pInNeurite);
         Si=[];
@@ -75,7 +75,7 @@ for i=1:length(B)
         selectedComponents.pInNeurite=pInNeurite;
         selectedComponents.pInSoma=pInSoma;
         selectedcomponents{i}=selectedComponents; 
-        nnm(pInSoma(1), pInSoma(2))=3; nnm(pInNeurite(1), pInNeurite(2))=4; figure; imshow(nnm,[]);
+        %nnm(pInSoma(1), pInSoma(2))=3; nnm(pInNeurite(1), pInNeurite(2))=4; figure; imshow(nnm,[]);
     end
 end
 
