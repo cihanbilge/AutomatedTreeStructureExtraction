@@ -1,4 +1,18 @@
 function [position,arcS, arcC,d]=adjestedPos(dd,cell_inc,nBands,cent,neu)
+% It takes the direction of neurite and segmented image, and 
+% adjusts the direction of neurite by finding the principal component of 
+% neurite at the initial point.  
+
+% INPUT: 
+% dd: difference between the initial seed point and the previous seed
+% point, it is used to find the direction of neurite. 
+% cell_inc: cell of rectangles in each directions and in different sizes,
+% nBands: number of filter orientations,
+% cent: initial seed point,
+% neu: segmented image.
+
+%OUTPUT:
+% position: adjusted direction of neurite,
 
 q=getquadrant(dd);
 num=atand(abs(dd(2)/dd(1)));
