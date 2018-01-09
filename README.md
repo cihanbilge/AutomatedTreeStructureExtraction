@@ -16,9 +16,11 @@ See contents.m for list of files in the package and information about them.
 How to use
 --------------
 The main file to run is Script.m
-The major inputs for the main file is segmented soma mask and segmented binary image. A test data is available in folder: 
+The major inputs for the main file is segmented soma mask and segmented binary image. A test data is available in main folder: 
 inputSeg.mat : segmented image of test data,
 inputSoma.mat : segmented soma mask of test data.
+
+Rest of the data can be found in subfolder "dataset". For each data there is a tif file, which is the maximum intensity projection of original stack, a matlab file "inputSeg_..", which is the segmented image and a MATLAB file "inputSoma_..", which is the segmented soma image. For the soma segmentation  the code in https://github.com/cihanbilge/SomaExtraction is used. Image segmentation code can be found  in https://www.math.uh.edu/~dlabate/software.html under the section "Vessel segmentation and centerline tracing code"
 
 Most crucial parameters are for seed search which are set in runCenterLineParallel.m, they can be changed if desired. Another important parameter is the angle threshold for seed search which can be changed from getNextSeed.m . 
 
